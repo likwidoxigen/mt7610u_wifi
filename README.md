@@ -1,5 +1,6 @@
 # mt7610u_wifi
-Ubuntu 14.10 compatible driver for ASUS Dual-Band Wireless-AC600 Wi-Fi Adapter (USB-AC51)
+Ubuntu 14.10 w/ Kernel 3.16.0-29-generic compatible driver for ASUS Dual-Band Wireless-AC600 Wi-Fi Adapter (USB-AC51)
+It should work for later kernels as well. If it stops I will likely end up fixing it or if somoene submits an issue to remind/notify me.
 I didn't clean up any of the warnings and I pretty much did the quickest hacks to get this functioning.
 
 sudo apt-get update
