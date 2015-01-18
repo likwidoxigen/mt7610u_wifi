@@ -1102,9 +1102,9 @@ static inline void __RtmpOSFSInfoChange(OS_FS_INFO * pOSFSInfo, BOOLEAN bSet)
 		/* Save uid and gid used for filesystem access. */
 		/* Set user and group to 0 (root) */
 #if LINUX_VERSION_CODE < KERNEL_VERSION(2,6,29)
-		pOSFSInfo->fsuid = current->fsuid;
-		pOSFSInfo->fsgid = current->fsgid;
-		current->fsuid = current->fsgid = 0;
+		pOSFSInfo->fsuid = current->fsuid.val;
+		pOSFSInfo->fsgid = current->fsgid.val;
+		current->fsuid = current->fsgid.val = 0;
 #else
 		pOSFSInfo->fsuid = current_fsuid().val;
 		pOSFSInfo->fsgid = current_fsgid().val;
@@ -1114,8 +1114,8 @@ static inline void __RtmpOSFSInfoChange(OS_FS_INFO * pOSFSInfo, BOOLEAN bSet)
 	} else {
 		set_fs(pOSFSInfo->fs);
 #if LINUX_VERSION_CODE < KERNEL_VERSION(2,6,29)
-		current->fsuid = pOSFSInfo->fsuid;
-		current->fsgid = pOSFSInfo->fsgid;
+		current->fsuid = pOSFSInfo->fsuid.val;
+		current->fsgid = pOSFSInfo->fsgid.val;
 #endif
 	}
 }

@@ -699,7 +699,6 @@ ifeq ($(HAS_CSO_SUPPORT), y)
 WFLAGS += -DCONFIG_CSO_SUPPORT -DCONFIG_TSO_SUPPORT
 endif
 
-#used to be 2860
 CHIPSET_DAT = 2870
 endif
 
