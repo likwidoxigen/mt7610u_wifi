@@ -2,6 +2,10 @@
 Ubuntu 14.10 compatible driver for ASUS Dual-Band Wireless-AC600 Wi-Fi Adapter (USB-AC51)
 I didn't clean up any of the warnings and I pretty much did the quickest hacks to get this functioning.
 
+sudo apt-get update
+sudo apt-get install linux-headers-generic build-essential git
+git clone https://github.com/likwidoxigen/mt7610u_wifi.git
+cd ~/rtl8812au
 make
 sudo make install
 
