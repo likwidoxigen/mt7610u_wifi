@@ -4,11 +4,18 @@ It should work for later kernels as well. If it stops I will likely end up fixin
 I didn't clean up any of the warnings and I pretty much did the quickest hacks to get this functioning.
 
 sudo apt-get update
+
 sudo apt-get install linux-headers-generic build-essential git
+
 git clone https://github.com/likwidoxigen/mt7610u_wifi.git
+
 cd ~/rtl8812au
+
 make
+
 sudo make install
+
+  
 
 At this point I did 
 sudo modprobe -v mt7650u_sta
