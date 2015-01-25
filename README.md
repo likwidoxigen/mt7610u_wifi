@@ -1,7 +1,7 @@
 # mt7610u_wifi
 Ubuntu 14.10 w/ Kernel 3.16.0-29-generic compatible driver for ASUS Dual-Band Wireless-AC600 Wi-Fi Adapter (USB-AC51)
 I didn't clean up any of the warnings and I pretty much did the quickest hacks to get this functioning.
-Kernel panics after 1-5 mintues of connection on Xubuntu 14.10. I spent about 15 total hours trying to get ubuntu to crap out logs or some sort of information regarding it and it just refuses. I've tried everything to get crashkernel to restart and dump properly but it won't. I don't have time for this crap. I don't mind working to solve the problem but if I can't get any f*ing info do debug it (the part that should take zero effort) Ubuntu can go straight to hell.
+Kernel panics after 1-5 mintues of connection on Xubuntu 14.10. I spent about 15 total hours trying to get ubuntu to crap out logs or some sort of information regarding it and it just refuses. The issue is that Kexec-tools is broken (again) so until that get fixed I can't be bothered to care. Myabe when Vivid comes out I'll revisit this.
 
 
 sudo apt-get update
