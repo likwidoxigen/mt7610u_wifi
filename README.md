@@ -1,7 +1,8 @@
 # mt7610u_wifi
 Ubuntu 14.10 w/ Kernel 3.16.0-29-generic compatible driver for ASUS Dual-Band Wireless-AC600 Wi-Fi Adapter (USB-AC51)
-It should work for later kernels as well. If it stops I will likely end up fixing it or if somoene submits an issue to remind/notify me.
 I didn't clean up any of the warnings and I pretty much did the quickest hacks to get this functioning.
+Kernel panics after 1-5 mintues of connection on Xubuntu 14.10. I spent about 15 total hours trying to get ubuntu to crap out logs or some sort of information regarding it and it just refuses. I've tried everything to get crashkernel to restart and dump properly but it won't. I don't have time for this crap. I don't mind working to solve the problem but if I can't get any f*ing info do debug it (the part that should take zero effort) Ubuntu can go straight to hell.
+
 
 sudo apt-get update
 
@@ -33,3 +34,13 @@ https://wikidevi.com/wiki/ASUS_USB-AC51
 ubuntuforums.org/showthread.php?t=2228244&page=1
 http://ubuntuforums.org/showthread.php?t=1659919
 http://ubuntuforums.org/showthread.php?t=2171240
+
+Things that don't work to get a core dump or any sort of panic info & general info:
+https://wiki.ubuntu.com/Kernel/KernelDebuggingTricks
+https://help.ubuntu.com/lts/serverguide/kernel-crash-dump.html
+http://www.dedoimedo.com/computers/crash-analyze.html
+http://stackoverflow.com/questions/7732983/core-dump-file-is-not-generated
+https://wiki.ubuntu.com/Kernel/CrashdumpRecipe?action=show&redirect=KernelTeam%2FCrashdumpRecipe
+http://magazine.redhat.com/2007/08/15/a-quick-overview-of-linux-kernel-crash-dump-analysis/
+http://unix.stackexchange.com/questions/5459/how-to-understand-the-kernel-panic-core-dump-output
+http://unix.stackexchange.com/questions/60574/determining-cause-of-linux-kernel-panic
