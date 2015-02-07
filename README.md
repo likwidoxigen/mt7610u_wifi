@@ -16,8 +16,10 @@ sudo make install
   
 
 At this point I did 
+```
 sudo modprobe -v mt7650u_sta
 iwconfig
+```
 
 I saw the RA0 adapter but I could only configure it manually not in network-mangager. 
 
@@ -28,7 +30,7 @@ It all popped up in network manager like it was supposed to and I could connect 
 
 References:
 - https://wikidevi.com/wiki/ASUS_USB-AC51
-- ubuntuforums.org/showthread.php?t=2228244&page=1
+- https://ubuntuforums.org/showthread.php?t=2228244&page=1
 - http://ubuntuforums.org/showthread.php?t=1659919
 - http://ubuntuforums.org/showthread.php?t=2171240
 
