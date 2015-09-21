@@ -36,6 +36,7 @@
 /* module table */
 USB_DEVICE_ID rtusb_dev_id[] = {
 #ifdef MT76x0
+	{USB_DEVICE(0x2019,0xab31)}, /* GW-450D */
 	{USB_DEVICE(0x148F,0x7610)}, /* MT7610U */
 	{USB_DEVICE(0x0E8D,0x7610)}, /* MT7610U */
 	{USB_DEVICE(0x0B05,0x17D1)}, /* MT7650U USB ID for ASUS AC600*/
