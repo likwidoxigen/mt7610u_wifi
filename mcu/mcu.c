@@ -27,14 +27,14 @@
 
 #include	"rt_config.h"
 
-INT MCUBurstWrite(PRTMP_ADAPTER pAd, UINT32 Offset, UINT32 *Data, UINT32 Cnt)
+VOID MCUBurstWrite(PRTMP_ADAPTER pAd, UINT32 Offset, PUCHAR Data, UINT32 Cnt)
 {
 #ifdef RTMP_USB_SUPPORT
 	RTUSBMultiWrite_nBytes(pAd, Offset, Data, Cnt * 4, 64); 
 #endif /* RTMP_USB_SUPPORT */
 }
 
-INT MCURandomWrite(PRTMP_ADAPTER pAd, RTMP_REG_PAIR *RegPair, UINT32 Num)
+VOID MCURandomWrite(PRTMP_ADAPTER pAd, RTMP_REG_PAIR *RegPair, UINT32 Num)
 {
 	UINT32 Index;
 	

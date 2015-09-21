@@ -325,9 +325,9 @@ VOID AsicUpdateProtect(
 	IN BOOLEAN bNonGFExist)	
 {
 	PROT_CFG_STRUC	ProtCfg, ProtCfg4;
-	UINT32 Protect[6];
+	UINT32 Protect[6], PhyMode = 0x4000;
 	USHORT offset;
-	UCHAR i, PhyMode = 0x4000;
+	UCHAR i;
 	UINT32 MacReg = 0;
 
 #ifdef RALINK_ATE
@@ -2271,10 +2271,12 @@ VOID AsicAddPairwiseKeyEntry(
 {
 	INT i;
 	ULONG 		offset;
+#ifdef	DBG
 	PUCHAR		 pKey = pCipherKey->Key;
+	UCHAR		 CipherAlg = pCipherKey->CipherAlg;
+#endif
 	PUCHAR		 pTxMic = pCipherKey->TxMic;
 	PUCHAR		 pRxMic = pCipherKey->RxMic;
-	UCHAR		CipherAlg = pCipherKey->CipherAlg;
 
 	/* EKEY*/
 	offset = PAIRWISE_KEY_TABLE_BASE + (WCID * HW_KEY_ENTRY_SIZE);

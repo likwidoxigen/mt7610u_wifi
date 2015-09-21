@@ -43,7 +43,9 @@ VOID rtmp_set_vht(RTMP_ADAPTER *pAd, RT_PHY_INFO *phy_info)
 
 INT SetCommonVHT(RTMP_ADAPTER *pAd)
 {
+#ifdef	DBG
 	UCHAR cent_ch = 0;
+#endif
 
 	if (!WMODE_CAP_AC(pAd->CommonCfg.PhyMode))
 	{

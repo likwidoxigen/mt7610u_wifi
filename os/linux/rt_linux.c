@@ -173,8 +173,6 @@ VOID RTMPusecDelay(ULONG usec)
 /* Unify all delay routine by using udelay */
 VOID RtmpOsUsDelay(ULONG value)
 {
-	ULONG i;
-
 	udelay(value);
 }
 
@@ -2008,13 +2006,12 @@ VOID RtmpDrvAllE2PPrint(
 
 VOID RtmpDrvAllRFPrint(
 	IN VOID *pReserved,
-	IN UINT32 *pBuf,
+	IN CHAR *pBuf,
 	IN UINT32 BufLen)
 {
 	struct file *file_w;
 	PSTRING fileName = "RFDump.txt";
 	mm_segment_t orig_fs;
-	UINT32 macAddr = 0, macValue = 0;
 	
 	orig_fs = get_fs();
 	set_fs(KERNEL_DS);
@@ -2150,7 +2147,7 @@ int RtmpOSIRQRelease(
 	IN PPCI_DEV pci_dev,
 	IN BOOLEAN *pHaveMsi)
 {
-	struct net_device *net_dev = (struct net_device *)pNetDev;
+/*	struct net_device *net_dev = (struct net_device *)pNetDev; */
 
 
 

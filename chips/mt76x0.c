@@ -1195,7 +1195,7 @@ VOID SetRfChFreqParametersMT76x0(
 	UINT32 i = 0, RfBand = 0, MacReg = 0;
 	UCHAR RFValue = 0;
 	BOOLEAN bSDM = FALSE;
-	MT76x0_FREQ_ITEM *pMT76x0_freq_item = NULL;
+	const MT76x0_FREQ_ITEM *pMT76x0_freq_item = NULL;
 
 	if (!IS_MT76x0(pAd))
 	{
@@ -1573,7 +1573,7 @@ static VOID NICInitMT76x0RFRegisters(RTMP_ADAPTER *pAd)
 		E2: B0.R21<0>: xo_cxo<0>, B0.R22<7:0>: xo_cxo<8:1> 
 	*/
 	RFValue = (UCHAR)(pAd->RfFreqOffset & 0xFF);
-	RFValue = min(RFValue, 0xBF); /* Max of 9-bit built-in crystal oscillator C1 code */
+	RFValue = min(RFValue, (UCHAR)0xBF); /* Max of 9-bit built-in crystal oscillator C1 code */
 	rlt_rf_write(pAd, RF_BANK0, RF_R22, RFValue);
 	
 	rlt_rf_read(pAd, RF_BANK0, RF_R22, &RFValue);
@@ -1733,7 +1733,9 @@ static VOID MT76x0_AsicAntennaDefaultReset(
 
 static VOID MT76x0_ChipBBPAdjust(RTMP_ADAPTER *pAd)
 {
+#ifdef	DBG
 	static char *ext_str[]={"extNone", "extAbove", "", "extBelow"};
+#endif
 	UCHAR rf_bw, ext_ch;
 
 
@@ -1784,14 +1786,15 @@ static VOID MT76x0_ChipSwitchChannel(
 	enum SWITCH_CHANNEL_STAGE bScan)
 {
 	CHAR TxPwer = 0; /* Bbp94 = BBPR94_DEFAULT, TxPwer2 = DEFAULT_RF_TX_POWER; */
-	UCHAR RFValue = 0;
 	UINT32 RegValue = 0;
 	UINT32 Index;
 	UINT32 rf_phy_mode, rf_bw = RF_BW_20;
-	UCHAR bbp_ch_idx, delta_pwr;
+	UCHAR bbp_ch_idx;
 	UINT32 ret;
 	ULONG Old, New, Diff;
-#ifndef MT76x0_TSSI_CAL_COMPENSATION
+#ifdef MT76x0_TSSI_CAL_COMPENSATION
+	UCHAR delta_pwr;
+#else
 	UINT32 Value;
 #endif /* !MT76x0_TSSI_CAL_COMPENSATION */
 #ifdef SINGLE_SKU_V2
@@ -2358,9 +2361,9 @@ VOID mt76x0_read_per_rate_tx_pwr(
 	*/
 	// TODO: check if any document to describe this ?
 	RT28xx_EEPROM_READ16(pAd, EEPROM_VHT_BW80_TX_POWER_DELTA - 1, e2p_val);
-	pAd->chipCap.delta_tw_pwr_bw80 = (e2p_val & 0xFF00) == 0xFF00 ? 0 : (e2p_val & 0xFF00);
 
 	if ((e2p_val & 0xFF00) != 0xFF00) {
+		pAd->chipCap.delta_tw_pwr_bw80 = (USHORT)(e2p_val & 0xFF00);
 		if (e2p_val & 0x8000)
 			bw80_aband_delta = ((e2p_val & 0x1F00) >> 8);
 	
@@ -2368,6 +2371,8 @@ VOID mt76x0_read_per_rate_tx_pwr(
 			dec_aband_bw80_delta = FALSE;
 		else
 			dec_aband_bw80_delta = TRUE;
+	} else {
+		pAd->chipCap.delta_tw_pwr_bw80 = 0;
 	}
 
 #ifdef SINGLE_SKU_V2
@@ -5495,7 +5500,6 @@ void mt76x0_temp_tx_alc_init(PRTMP_ADAPTER pAd)
 
 void mt76x0_read_tx_alc_info_from_eeprom(PRTMP_ADAPTER pAd)
 {
-	BOOLEAN status = TRUE;
 	USHORT e2p_value = 0;
 
 	if (IS_MT76x0(pAd)) {

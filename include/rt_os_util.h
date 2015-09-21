@@ -663,7 +663,7 @@ VOID RtmpDrvAllE2PPrint(
 
 VOID RtmpDrvAllRFPrint(
 	IN VOID *pReserved,
-	IN UINT32 *pBuf,
+	IN CHAR *pBuf,
 	IN UINT32 BufLen);
 
 int RtmpOSIRQRelease(

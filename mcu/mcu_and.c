@@ -29,7 +29,7 @@
 
 
 #ifdef RTMP_MAC_USB
-VOID usb_uploadfw_complete(purbb_t urb, pregs *pt_regs)
+VOID usb_uploadfw_complete(purbb_t urb)
 {
 	RTMP_OS_COMPLETION *load_fw_done = (RTMP_OS_COMPLETION *)RTMP_OS_USB_CONTEXT_GET(urb);
 
@@ -111,7 +111,7 @@ loadfw_protect:
 		}
 
 		if (loop >= GET_SEMAPHORE_RETRY_MAX) {
-			DBGPRINT(RT_DEBUG_ERROR, ("%s: can not get the hw semaphore\n"));
+			DBGPRINT(RT_DEBUG_ERROR, ("%s: can not get the hw semaphore\n", __FUNCTION__));
 			return NDIS_STATUS_FAILURE;
 		}
 	}
@@ -784,6 +784,7 @@ static u32 andes_queue_len(struct MCU_CTRL *ctl, DL_LIST *list)
 	return qlen;
 }
 
+#if 0
 static int andes_queue_empty(struct MCU_CTRL *ctl, DL_LIST *list)
 {
 	unsigned long flags;
@@ -798,6 +799,7 @@ static int andes_queue_empty(struct MCU_CTRL *ctl, DL_LIST *list)
 
 	return is_empty;
 }
+#endif
 
 static void andes_queue_init(struct MCU_CTRL *ctl, DL_LIST *list)
 {
@@ -1272,7 +1274,7 @@ static int andes_dequeue_and_kick_out_cmd_msgs(RTMP_ADAPTER *ad)
 	int ret = NDIS_STATUS_SUCCESS;
 	TXINFO_NMAC_CMD *tx_info;
 
-	while (msg = andes_dequeue_cmd_msg(ctl, &ctl->txq)) {
+	while ((msg = andes_dequeue_cmd_msg(ctl, &ctl->txq))) {
 		if (!RTMP_TEST_FLAG(ad, fRTMP_ADAPTER_MCU_SEND_IN_BAND_CMD) 
 				|| RTMP_TEST_FLAG(ad, fRTMP_ADAPTER_NIC_NOT_EXIST)
 				|| RTMP_TEST_FLAG(ad, fRTMP_ADAPTER_SUSPEND)) { 

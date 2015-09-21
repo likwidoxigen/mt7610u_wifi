@@ -7239,7 +7239,7 @@ NTSTATUS RTUSBMultiWrite(
 NTSTATUS RTUSBMultiWrite_nBytes(
         IN      PRTMP_ADAPTER   pAd,
         IN      USHORT                  Offset,
-        IN      PUCHAR                  pData,
+        IN      PUCHAR			pData,
         IN      USHORT                  length,
         IN      USHORT                  batchLen);
 
@@ -7840,8 +7840,6 @@ INT Set_Wpa_Support(
 	IN	PSTRING			arg);
 #endif /* WPA_SUPPLICANT_SUPPORT */
 
-#ifdef DBG
-
 VOID RTMPIoctlMAC(
 	IN	PRTMP_ADAPTER	pAdapter, 
 	IN	RTMP_IOCTL_INPUT_STRUCT	*wrq);
@@ -7849,6 +7847,8 @@ VOID RTMPIoctlMAC(
 VOID RTMPIoctlE2PROM(
     IN  PRTMP_ADAPTER   pAdapter,
     IN  RTMP_IOCTL_INPUT_STRUCT *wrq);
+#ifdef DBG
+
 #endif /* DBG */
 
 

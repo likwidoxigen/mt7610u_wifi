@@ -4574,7 +4574,6 @@ INT RTMPQueryInformation(
 }
 
 
-#ifdef DBG
 /* 
     ==========================================================================
     Description:
@@ -5019,8 +5018,6 @@ LabelOK:
 	return;
 }
 
-
-#endif /* DBG */
 
 
 #ifdef RT65xx

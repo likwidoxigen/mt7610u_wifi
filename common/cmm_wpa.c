@@ -1158,7 +1158,9 @@ VOID PeerPairMsg4Action(
     PHEADER_802_11      pHeader;
     UINT            	MsgLen;
     BOOLEAN             Cancelled;
-	UCHAR				group_cipher = Ndis802_11WEPDisabled;
+#ifdef	DBG
+    UCHAR				group_cipher = Ndis802_11WEPDisabled;
+#endif
 
     DBGPRINT(RT_DEBUG_TRACE, ("===> PeerPairMsg4Action\n"));
 
@@ -1518,7 +1520,9 @@ VOID PeerGroupMsg2Action(
     PUCHAR          	pData;
     BOOLEAN         	Cancelled;
 	PEAPOL_PACKET       pMsg2;	
+#ifdef	DBG
 	UCHAR				group_cipher = Ndis802_11WEPDisabled;	
+#endif
 
 	DBGPRINT(RT_DEBUG_TRACE, ("===> PeerGroupMsg2Action \n"));
 

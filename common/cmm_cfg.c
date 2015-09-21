@@ -200,7 +200,9 @@ static UCHAR CFG_WMODE_MAP[]={
 };
 
 
+#ifdef	DBG
 static PSTRING BAND_STR[] = {"Invalid", "2.4G", "5G", "2.4G/5G"};
+#endif
 static PSTRING WMODE_STR[]= {"", "A", "B", "G", "gN", "aN", "AC"};
 
 UCHAR *wmode_2_str(UCHAR wmode)
@@ -702,7 +704,6 @@ INT RTMP_COM_IoctlHandle(
                 case CMD_RTPRIV_IOCTL_USB_INTF_GET:
                 /* get USB INTF */
                 {
-                        VOID **ppINTF = (VOID **)pData;
                         //*ppINTF = (VOID *)(pObj->intf);
                 }
                         break;

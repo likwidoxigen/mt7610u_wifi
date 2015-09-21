@@ -519,8 +519,9 @@ int write_reg(
 
 	if (ret) {
 		DBGPRINT(RT_DEBUG_ERROR, ("write reg fail\n"));
-		return;
 	}
+
+	return ret;
 }
 
 int read_reg(
@@ -537,6 +538,7 @@ int read_reg(
 		req = 0x47;
 	else if (base == 0x41)
 		req = 0x7;
+	else return -1;
 
 	ret = RTUSB_VendorRequest(ad,
 							  (USBD_TRANSFER_DIRECTION_IN | USBD_SHORT_TRANSFER_OK),
@@ -551,6 +553,8 @@ int read_reg(
 
 	if (ret)
 		*value = 0xffffffff;
+
+	return ret;
 }
 
 /*
@@ -801,7 +805,6 @@ NTSTATUS RTUSBWriteEEPROM(
 	IN	USHORT			length)
 {
 	NTSTATUS Status = STATUS_SUCCESS;
-	USHORT Value;
 
 	Status = RTUSB_VendorRequest(
 				pAd,
