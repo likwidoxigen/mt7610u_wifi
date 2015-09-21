@@ -5634,12 +5634,18 @@ RtmpIoctl_rt_ioctl_siwfreq(
 
     if (ChannelSanity(pAd, chan) == TRUE)
     {
-	pAd->CommonCfg.Channel = chan;
-		/* Save the channel on MlmeAux for CntlOidRTBssidProc used. */
-		pAd->MlmeAux.Channel = pAd->CommonCfg.Channel;
-		/*save connect info*/
-		pAd->StaCfg.ConnectinfoChannel = pAd->CommonCfg.Channel;	
-	DBGPRINT(RT_DEBUG_ERROR, ("==>rt_ioctl_siwfreq::SIOCSIWFREQ(Channel=%d)\n", pAd->CommonCfg.Channel));
+	    STRING	ChStr[5] = {0};
+	    pAd->CommonCfg.Channel = chan;
+	    /* Save the channel on MlmeAux for CntlOidRTBssidProc used. */
+	    pAd->MlmeAux.Channel = pAd->CommonCfg.Channel;
+	    /*save connect info*/
+	    pAd->StaCfg.ConnectinfoChannel = pAd->CommonCfg.Channel;
+	    DBGPRINT(RT_DEBUG_ERROR, ("==>rt_ioctl_siwfreq::SIOCSIWFREQ(Channel=%d)\n", pAd->CommonCfg.Channel));
+
+	    //Update channel setting to hw
+	    snprintf(ChStr, sizeof(ChStr), "%d", chan);
+	    Set_Channel_Proc(pAd, ChStr);
+	    DBGPRINT(RT_DEBUG_ERROR, ("==>rt_ioctl_siwfreq::SIOCSIWFREQ(Channel=%d) Set_Channel_Proc\n", pAd->CommonCfg.Channel));
     }
     else
         return NDIS_STATUS_FAILURE;
