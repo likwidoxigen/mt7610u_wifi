@@ -109,7 +109,7 @@
 
 #ifdef KTHREAD_SUPPORT
 #if LINUX_VERSION_CODE < KERNEL_VERSION(2,6,4)
-#error "This kerne version doesn't support kthread!!"
+#error "This kernel version doesn't support kthread!!"
 #endif
 #endif /* KTHREAD_SUPPORT */
 
@@ -277,8 +277,13 @@ typedef struct file* RTMP_OS_FD;
 
 typedef struct _OS_FS_INFO_
 {
-	int				fsuid;
-	int				fsgid;
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,12,0)
+	uid_t				fsuid;
+	gid_t				fsgid;
+#else
+	kuid_t				fsuid;
+	kgid_t				fsgid;
+#endif
 	mm_segment_t	fs;
 } OS_FS_INFO;
 
