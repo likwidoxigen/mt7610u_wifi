@@ -5361,7 +5361,7 @@ VOID IterateOnBssTab(
 	IN  PRTMP_ADAPTER   pAd);
 
 VOID IterateOnBssTab2(
-	IN  PRTMP_ADAPTER   pAd);;
+	IN  PRTMP_ADAPTER   pAd);
 
 VOID JoinParmFill(
 	IN  PRTMP_ADAPTER   pAd, 

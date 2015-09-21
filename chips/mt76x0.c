@@ -2315,7 +2315,7 @@ VOID mt76x0_read_per_rate_tx_pwr(
 	IN PRTMP_ADAPTER pAd)
 {
 	UINT32 data;
-	USHORT e2p_val = 0, e2p_val2 = 0;;
+	USHORT e2p_val = 0, e2p_val2 = 0;
 	UCHAR bw40_gband_delta = 0, bw40_aband_delta = 0, bw80_aband_delta = 0;
 	CHAR t1 = 0, t2 = 0, t3 = 0, t4 = 0;
 	BOOLEAN dec_aband_bw40_delta = FALSE, dec_aband_bw80_delta = FALSE, dec_gband_bw40_delta = FALSE;
@@ -3940,10 +3940,10 @@ VOID MT76x0_MakeUpTssiTable(
 
 	RTMP_IO_READ32(pAd, TX_PWR_CFG_8, &reg_val);
 	DBGPRINT(RT_DEBUG_TRACE, ("0x%x: 0x%x\n", TX_PWR_CFG_8, reg_val));
-	pAd->chipCap.tssi_table.VHT[8].MCS_Power = (CHAR)((reg_val&0x3F0000)>>16);;
+	pAd->chipCap.tssi_table.VHT[8].MCS_Power = (CHAR)((reg_val&0x3F0000)>>16);
 	if ( pAd->chipCap.tssi_table.VHT[8].MCS_Power & 0x20 ) // > 32
 		pAd->chipCap.tssi_table.VHT[8].MCS_Power -= 64;
-	pAd->chipCap.tssi_table.VHT[9].MCS_Power = (CHAR)((reg_val&0x3F000000)>>24);;
+	pAd->chipCap.tssi_table.VHT[9].MCS_Power = (CHAR)((reg_val&0x3F000000)>>24);
 	if ( pAd->chipCap.tssi_table.VHT[9].MCS_Power & 0x20 ) // > 32
 		pAd->chipCap.tssi_table.VHT[9].MCS_Power -= 64;
 

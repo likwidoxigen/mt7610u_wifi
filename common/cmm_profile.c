@@ -1336,7 +1336,7 @@ static void HTParametersHook(
 			
 			if (RTMPGetKeyParameter("HT_BSSCoexApCntThr", pValueStr, 25, pInput, TRUE))
 			{
-				pAd->CommonCfg.BssCoexApCntThr = simple_strtol(pValueStr, 0, 10);;
+				pAd->CommonCfg.BssCoexApCntThr = simple_strtol(pValueStr, 0, 10);
 
 				DBGPRINT(RT_DEBUG_TRACE, ("HT: 20/40 BssCoexApCntThr = %d\n", pAd->CommonCfg.BssCoexApCntThr));
 			}
