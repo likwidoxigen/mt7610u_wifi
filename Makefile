@@ -466,6 +466,7 @@ ifeq ($(TARGET), LINUX)
 	cp -f os/linux/Makefile.clean os/linux/Makefile
 	$(MAKE) -C os/linux clean
 	rm -rf os/linux/Makefile
+	$(MAKE) -C tools clean
 endif	
 ifeq ($(TARGET), UCOS)
 	$(MAKE) -C os/ucos clean MODE=$(RT28xx_MODE)
