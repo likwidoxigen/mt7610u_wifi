@@ -1781,7 +1781,7 @@ static VOID MT76x0_ChipBBPAdjust(RTMP_ADAPTER *pAd)
 static VOID MT76x0_ChipSwitchChannel(
 	struct _RTMP_ADAPTER *pAd,
 	UCHAR Channel,
-	BOOLEAN bScan)
+	enum SWITCH_CHANNEL_STAGE bScan)
 {
 	CHAR TxPwer = 0; /* Bbp94 = BBPR94_DEFAULT, TxPwer2 = DEFAULT_RF_TX_POWER; */
 	UCHAR RFValue = 0;
@@ -1933,7 +1933,7 @@ static VOID MT76x0_ChipSwitchChannel(
 	*/
 	MT76x0_VCO_CalibrationMode3(pAd, Channel);
 		
-	if (bScan)
+	if (bScan & SCANNING)
 		MT76x0_Calibration(pAd, Channel, FALSE, FALSE, FALSE);
 
 	RTMPusecDelay(1000);
