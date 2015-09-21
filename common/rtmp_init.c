@@ -1587,7 +1587,8 @@ NDIS_STATUS	NICInitializeAsic(
 
 #ifdef RTMP_MAC_USB
 {
-		UINT32 MACValue[254 * 2];
+		UINT32 *MACValue;
+		MACValue = vmalloc(sizeof(UINT32) * 254 * 2);
 	
 		for (Index = 0; Index < 254 * 2; Index += 2)
 		{
@@ -1596,6 +1597,7 @@ NDIS_STATUS	NICInitializeAsic(
 		}
 
 		BURST_WRITE(pAd, MAC_WCID_BASE, MACValue, 254 * 2);
+		vfree(MACValue);
 }
 #endif /* RTMP_MAC_USB */
 
