@@ -472,21 +472,21 @@ NTSTATUS RTUSBWriteMACRegister(
 	IN BOOLEAN bWriteHigh)
 {
 	NTSTATUS Status;
-	UINT32 localVal;
+	UCHAR localValue[4];
 
-	localVal = Value;
+	memcpy(localValue, &Value, sizeof(UINT32));
 
 	/* MT76xx HW has 4 byte alignment constrained */    
 	if (IS_MT76xx(pAd)) {   
 		Status = RTUSBMultiWrite_nBytes(
 		pAd,
 		Offset,
-		&Value,
+		(PUCHAR)&localValue,
 		4,
 		4);
 	} else {
-		Status = RTUSBSingleWrite(pAd, Offset, (USHORT)(localVal & 0xffff), bWriteHigh);
-		Status = RTUSBSingleWrite(pAd, Offset + 2, (USHORT)((localVal & 0xffff0000) >> 16), bWriteHigh);
+		Status = RTUSBSingleWrite(pAd, Offset, (USHORT)(Value & 0xffff), bWriteHigh);
+		Status = RTUSBSingleWrite(pAd, Offset + 2, (USHORT)((Value & 0xffff0000) >> 16), bWriteHigh);
 	}
 
 	return Status;
