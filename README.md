@@ -51,3 +51,6 @@ Other ralink implementations or references:
 - https://github.com/qualiabyte/install-rt2860
 - https://github.com/kuba-moo/mt7601u
 - https://github.com/porjo/mt7601
+- https://github.com/chenhaiq/mt7610u_wifi_sta_v3002_dpo_20130916
+- https://github.com/sugree/asus-ac51
+- https://github.com/hro424/mt7610u_wifi
