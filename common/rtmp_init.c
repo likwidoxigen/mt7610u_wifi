@@ -709,6 +709,7 @@ VOID NICReadEEPROMParameters(RTMP_ADAPTER *pAd, PSTRING mac_addr)
 	else
 #endif /* RT65xx */
 	/* 1. 11a*/
+#if 0
 	{
 		{
 		}
@@ -719,6 +720,7 @@ VOID NICReadEEPROMParameters(RTMP_ADAPTER *pAd, PSTRING mac_addr)
 			pAd->TssiPlusBoundaryA[1], pAd->TssiPlusBoundaryA[2], pAd->TssiPlusBoundaryA[3], pAd->TssiPlusBoundaryA[4],
 			pAd->TxAgcStepA, pAd->bAutoTxAgcA));
 	}	
+#endif
 	pAd->BbpRssiToDbmDelta = 0x0;
 	
 	/* Read frequency offset setting for RF*/
@@ -1058,7 +1060,9 @@ VOID	NICInitAsicFromEEPROM(
 #ifdef CONFIG_STA_SUPPORT
 	UINT32 data = 0;
 #endif /* CONFIG_STA_SUPPORT */
+#ifndef RT65xx
 	USHORT i;
+#endif
 #ifdef RALINK_ATE
 	USHORT value;
 #endif /* RALINK_ATE */
@@ -1583,7 +1587,8 @@ NDIS_STATUS	NICInitializeAsic(
 
 #ifdef RTMP_MAC_USB
 {
-		UINT32 MACValue[254 * 2];
+		UINT32 *MACValue;
+		MACValue = vmalloc(sizeof(UINT32) * 254 * 2);
 	
 		for (Index = 0; Index < 254 * 2; Index += 2)
 		{
@@ -1592,6 +1597,7 @@ NDIS_STATUS	NICInitializeAsic(
 		}
 
 		BURST_WRITE(pAd, MAC_WCID_BASE, MACValue, 254 * 2);
+		vfree(MACValue);
 }
 #endif /* RTMP_MAC_USB */
 

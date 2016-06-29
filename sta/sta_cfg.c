@@ -3642,7 +3642,7 @@ INT RTMPQueryInformation(
                 if (pAd->WlanCounters.TransmittedFragmentCount.QuadPart < pAd->WlanCounters.RetryCount.QuadPart)
                     pAd->WlanCounters.TransmittedFragmentCount.QuadPart = pAd->WlanCounters.RetryCount.QuadPart;
 
-		pStatistics->TransmittedFragmentCount.QuadPart = pAd->WlanCounters.TransmittedFragmentCount.QuadPart + pAd->WlanCounters.MulticastTransmittedFrameCount.QuadPart;;
+		pStatistics->TransmittedFragmentCount.QuadPart = pAd->WlanCounters.TransmittedFragmentCount.QuadPart + pAd->WlanCounters.MulticastTransmittedFrameCount.QuadPart;
                 pStatistics->MulticastTransmittedFrameCount.QuadPart = pAd->WlanCounters.MulticastTransmittedFrameCount.QuadPart;
                 pStatistics->FailedCount.QuadPart = pAd->WlanCounters.FailedCount.QuadPart;
                 pStatistics->RetryCount.QuadPart = pAd->WlanCounters.RetryCount.QuadPart;
@@ -4574,7 +4574,6 @@ INT RTMPQueryInformation(
 }
 
 
-#ifdef DBG
 /* 
     ==========================================================================
     Description:
@@ -5020,8 +5019,6 @@ LabelOK:
 }
 
 
-#endif /* DBG */
-
 
 #ifdef RT65xx
 VOID RTMPIoctlBbp32(
@@ -5398,8 +5395,7 @@ VOID RTMPIoctlShow(
             wrq->u.data.length = strlen(extra) + 1; /* 1: size of '\0' */
             break;
         case SHOW_DRVIER_VERION:
-            //snprintf(extra, size, "Driver version-%s, %s %s\n", STA_DRIVER_VERSION, __DATE__, __TIME__ );
-snprintf(extra, size, "Driver version-%s\n", STA_DRIVER_VERSION);
+            snprintf(extra, size, "Driver version-%s\n", STA_DRIVER_VERSION);
             wrq->u.data.length = strlen(extra) + 1; /* 1: size of '\0' */
             break;
 #ifdef DOT11_N_SUPPORT
@@ -5638,12 +5634,18 @@ RtmpIoctl_rt_ioctl_siwfreq(
 
     if (ChannelSanity(pAd, chan) == TRUE)
     {
-	pAd->CommonCfg.Channel = chan;
-		/* Save the channel on MlmeAux for CntlOidRTBssidProc used. */
-		pAd->MlmeAux.Channel = pAd->CommonCfg.Channel;
-		/*save connect info*/
-		pAd->StaCfg.ConnectinfoChannel = pAd->CommonCfg.Channel;	
-	DBGPRINT(RT_DEBUG_ERROR, ("==>rt_ioctl_siwfreq::SIOCSIWFREQ(Channel=%d)\n", pAd->CommonCfg.Channel));
+	    STRING	ChStr[5] = {0};
+	    pAd->CommonCfg.Channel = chan;
+	    /* Save the channel on MlmeAux for CntlOidRTBssidProc used. */
+	    pAd->MlmeAux.Channel = pAd->CommonCfg.Channel;
+	    /*save connect info*/
+	    pAd->StaCfg.ConnectinfoChannel = pAd->CommonCfg.Channel;
+	    DBGPRINT(RT_DEBUG_ERROR, ("==>rt_ioctl_siwfreq::SIOCSIWFREQ(Channel=%d)\n", pAd->CommonCfg.Channel));
+
+	    //Update channel setting to hw
+	    snprintf(ChStr, sizeof(ChStr), "%d", chan);
+	    Set_Channel_Proc(pAd, ChStr);
+	    DBGPRINT(RT_DEBUG_ERROR, ("==>rt_ioctl_siwfreq::SIOCSIWFREQ(Channel=%d) Set_Channel_Proc\n", pAd->CommonCfg.Channel));
     }
     else
         return NDIS_STATUS_FAILURE;

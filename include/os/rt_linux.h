@@ -109,7 +109,7 @@
 
 #ifdef KTHREAD_SUPPORT
 #if LINUX_VERSION_CODE < KERNEL_VERSION(2,6,4)
-#error "This kerne version doesn't support kthread!!"
+#error "This kernel version doesn't support kthread!!"
 #endif
 #endif /* KTHREAD_SUPPORT */
 
@@ -277,8 +277,13 @@ typedef struct file* RTMP_OS_FD;
 
 typedef struct _OS_FS_INFO_
 {
-	int				fsuid;
-	int				fsgid;
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,12,0)
+	uid_t				fsuid;
+	gid_t				fsgid;
+#else
+	kuid_t				fsuid;
+	kgid_t				fsgid;
+#endif
 	mm_segment_t	fs;
 } OS_FS_INFO;
 
@@ -792,7 +797,7 @@ void linux_pci_unmap_single(void *handle, ra_dma_addr_t dma_addr, size_t size, i
 	RTUSBReadMACRegister((_A), (_R), (PUINT32) (_pV))
 
 #define RTMP_IO_WRITE32(_A, _R, _V)								\
-	RTUSBWriteMACRegister((_A), (_R), (UINT32) (_V), FALSE)
+	RTUSBWriteMACRegister((_A), (_R), (_V), FALSE)
 
 #define RTMP_IO_WRITE8(_A, _R, _V)								\
 {																\
@@ -881,15 +886,17 @@ void linux_pci_unmap_single(void *handle, ra_dma_addr_t dma_addr, size_t size, i
 		(RTPKT_TO_OSPKT(_pkt)->len) = (_len)
 		
 #define GET_OS_PKT_DATATAIL(_pkt) \
-		(RTPKT_TO_OSPKT(_pkt)->tail)
-#define SET_OS_PKT_DATATAIL(_pkt, _start, _len)	\
-		((RTPKT_TO_OSPKT(_pkt))->tail) = (PUCHAR)((_start) + (_len))
+		(skb_tail_pointer(RTPKT_TO_OSPKT(_pkt)))
+
+#define SET_OS_PKT_DATATAIL(_pkt, _start, _len) \
+		(skb_set_tail_pointer(RTPKT_TO_OSPKT(_pkt), \
+			(int)((_start) - GET_OS_PKT_DATAPTR(_pkt)) + (_len)))
 		
 #define GET_OS_PKT_HEAD(_pkt) \
 		(RTPKT_TO_OSPKT(_pkt)->head)
 
 #define GET_OS_PKT_END(_pkt) \
-		(RTPKT_TO_OSPKT(_pkt)->end)
+	(skb_end_pointer(RTPKT_TO_OSPKT(_pkt)))
 
 #define GET_OS_PKT_NETDEV(_pkt) \
 		(RTPKT_TO_OSPKT(_pkt)->dev)

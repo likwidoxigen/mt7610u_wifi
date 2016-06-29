@@ -1553,15 +1553,16 @@ if (0)/*pHeader->FC.Type != BTYPE_MGMT)*/{
 		INC_COUNTER64(pAd->WlanCounters.ReceivedFragmentCount);
 #endif /* STATS_COUNT_SUPPORT */
 
-		if (pRxWI->RxWIMPDUByteCnt < 14)
-		{
-			Status = NDIS_STATUS_FAILURE;
-			continue;
-		}
-
 		if (MONITOR_ON(pAd))
 		{
 			STA_MonPktSend(pAd, &RxBlk);
+			continue;
+		}
+
+		if (pRxWI->RxWIMPDUByteCnt < 14)
+		{
+			Status = NDIS_STATUS_FAILURE;
+			//Credit http://blog.csdn.net/luotong86/article/details/39957605
 			continue;
 		}
 

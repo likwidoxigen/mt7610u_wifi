@@ -305,7 +305,7 @@ int rt28xx_open(VOID *dev)
 		if (res)
 		{
 			DBGPRINT(RT_DEBUG_ERROR, ("rt28xx_open autopm_resume fail ------\n"));
-			return (-1);;
+			return (-1);
 		}			
 	}
 

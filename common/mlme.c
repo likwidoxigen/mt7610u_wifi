@@ -535,8 +535,8 @@ VOID MlmeResetRalinkCounters(
 #endif /* RALINK_ATE */
 		/* for performace enchanement */
 		NdisZeroMemory(&pAd->RalinkCounters,
-						(UINT32)&pAd->RalinkCounters.OneSecEnd -
-						(UINT32)&pAd->RalinkCounters.OneSecStart);
+						(UINT32)(&pAd->RalinkCounters.OneSecEnd -
+						&pAd->RalinkCounters.OneSecStart));
 
 	return;
 }
@@ -1158,7 +1158,7 @@ VOID STAMlmePeriodicExec(
 			(pAd->StaCfg.bImprovedScan == FALSE) &&
 			((TxTotalCnt + pAd->RalinkCounters.OneSecRxOkCnt) < 600))
 		{
-			printk("pAd->PendingRx = %d\n", pAd->PendingRx);
+			//printk("pAd->PendingRx = %d\n", pAd->PendingRx);
 			RTMPSetAGCInitValue(pAd, BW_20);
 			DBGPRINT(RT_DEBUG_TRACE, ("MMCHK - No BEACON. restore R66 to the low bound(%d) \n", (0x2E + GET_LNA_GAIN(pAd))));
 		}

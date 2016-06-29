@@ -1158,7 +1158,9 @@ VOID PeerPairMsg4Action(
     PHEADER_802_11      pHeader;
     UINT            	MsgLen;
     BOOLEAN             Cancelled;
-	UCHAR				group_cipher = Ndis802_11WEPDisabled;
+#ifdef	DBG
+    UCHAR				group_cipher = Ndis802_11WEPDisabled;
+#endif
 
     DBGPRINT(RT_DEBUG_TRACE, ("===> PeerPairMsg4Action\n"));
 
@@ -1518,7 +1520,9 @@ VOID PeerGroupMsg2Action(
     PUCHAR          	pData;
     BOOLEAN         	Cancelled;
 	PEAPOL_PACKET       pMsg2;	
+#ifdef	DBG
 	UCHAR				group_cipher = Ndis802_11WEPDisabled;	
+#endif
 
 	DBGPRINT(RT_DEBUG_TRACE, ("===> PeerGroupMsg2Action \n"));
 
@@ -2480,7 +2484,7 @@ VOID RTMPMakeRSNIE(
 	UCHAR		PrimaryRsnie;			
 	BOOLEAN		bMixCipher = FALSE;	/* indicate the pairwise and group cipher are different*/
 	UCHAR		p_offset;		
-	WPA_MIX_PAIR_CIPHER		FlexibleCipher = MIX_CIPHER_NOTUSE;	/* it provide the more flexible cipher combination in WPA-WPA2 and TKIPAES mode*/
+	WPA_MIX_PAIR_CIPHER		FlexibleCipher = WPA_TKIPAES_WPA2_TKIPAES;
 		
 	rsnielen_cur_p = NULL;
 	rsnielen_ex_cur_p = NULL;

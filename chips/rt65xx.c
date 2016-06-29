@@ -113,12 +113,14 @@ VOID ral_wlan_chip_onoff(
 VOID dump_bw_info(RTMP_ADAPTER *pAd)
 {
 		UINT32 core_r1, agc_r0, be_r0, band_cfg;
-		static UCHAR *bw_str[]={"20", "10", "40", "80"};
 		UCHAR bw, prim_ch_idx, decode_cap;
+		UCHAR tx_prim;
+#ifdef	DBG
+		static UCHAR *bw_str[]={"20", "10", "40", "80"};
 		static UCHAR *decode_str[] = {"0", "20", "40", "20/40",
 									"80", "20/80", "40/80", "20/40/80"};
-		UCHAR tx_prim;
 		RTMP_CHIP_CAP *pChipCap = &pAd->chipCap;
+#endif
 
 
 		RTMP_BBP_IO_READ32(pAd, CORE_R1, &core_r1);

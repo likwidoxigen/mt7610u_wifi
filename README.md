@@ -44,3 +44,13 @@ Things that don't work to get a core dump or any sort of panic info & general in
 - http://magazine.redhat.com/2007/08/15/a-quick-overview-of-linux-kernel-crash-dump-analysis/
 - http://unix.stackexchange.com/questions/5459/how-to-understand-the-kernel-panic-core-dump-output
 - http://unix.stackexchange.com/questions/60574/determining-cause-of-linux-kernel-panic
+
+
+Other ralink implementations or references:
+- https://github.com/cnt0/rt5390
+- https://github.com/qualiabyte/install-rt2860
+- https://github.com/kuba-moo/mt7601u
+- https://github.com/porjo/mt7601
+- https://github.com/chenhaiq/mt7610u_wifi_sta_v3002_dpo_20130916
+- https://github.com/sugree/asus-ac51
+- https://github.com/hro424/mt7610u_wifi

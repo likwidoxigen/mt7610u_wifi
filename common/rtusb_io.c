@@ -472,21 +472,21 @@ NTSTATUS RTUSBWriteMACRegister(
 	IN BOOLEAN bWriteHigh)
 {
 	NTSTATUS Status;
-	UINT32 localVal;
+	UCHAR localValue[4];
 
-	localVal = Value;
+	memcpy(localValue, &Value, sizeof(UINT32));
 
 	/* MT76xx HW has 4 byte alignment constrained */    
 	if (IS_MT76xx(pAd)) {   
 		Status = RTUSBMultiWrite_nBytes(
 		pAd,
 		Offset,
-		&Value,
+		(PUCHAR)&localValue,
 		4,
 		4);
 	} else {
-		Status = RTUSBSingleWrite(pAd, Offset, (USHORT)(localVal & 0xffff), bWriteHigh);
-		Status = RTUSBSingleWrite(pAd, Offset + 2, (USHORT)((localVal & 0xffff0000) >> 16), bWriteHigh);
+		Status = RTUSBSingleWrite(pAd, Offset, (USHORT)(Value & 0xffff), bWriteHigh);
+		Status = RTUSBSingleWrite(pAd, Offset + 2, (USHORT)((Value & 0xffff0000) >> 16), bWriteHigh);
 	}
 
 	return Status;
@@ -519,8 +519,9 @@ int write_reg(
 
 	if (ret) {
 		DBGPRINT(RT_DEBUG_ERROR, ("write reg fail\n"));
-		return;
 	}
+
+	return ret;
 }
 
 int read_reg(
@@ -537,6 +538,7 @@ int read_reg(
 		req = 0x47;
 	else if (base == 0x41)
 		req = 0x7;
+	else return -1;
 
 	ret = RTUSB_VendorRequest(ad,
 							  (USBD_TRANSFER_DIRECTION_IN | USBD_SHORT_TRANSFER_OK),
@@ -551,6 +553,8 @@ int read_reg(
 
 	if (ret)
 		*value = 0xffffffff;
+
+	return ret;
 }
 
 /*
@@ -801,7 +805,6 @@ NTSTATUS RTUSBWriteEEPROM(
 	IN	USHORT			length)
 {
 	NTSTATUS Status = STATUS_SUCCESS;
-	USHORT Value;
 
 	Status = RTUSB_VendorRequest(
 				pAd,

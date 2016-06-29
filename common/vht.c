@@ -100,8 +100,10 @@ static struct vht_ch_layout vht_ch_80M[]={
 
 VOID dump_vht_cap(RTMP_ADAPTER *pAd, VHT_CAP_IE *vht_ie)
 {
+#ifdef	DBG
 	VHT_CAP_INFO *vht_cap = &vht_ie->vht_cap;
 	VHT_MCS_SET *vht_mcs = &vht_ie->mcs_set;
+#endif
 
 	DBGPRINT(RT_DEBUG_OFF, ("Dump VHT_CAP IE\n"));	
 	hex_dump("VHT CAP IE Raw Data", (UCHAR *)vht_ie, sizeof(VHT_CAP_IE));
@@ -137,8 +139,10 @@ VOID dump_vht_cap(RTMP_ADAPTER *pAd, VHT_CAP_IE *vht_ie)
 
 VOID dump_vht_op(RTMP_ADAPTER *pAd, VHT_OP_IE *vht_ie)
 {
+#ifdef	DBG
 	VHT_OP_INFO *vht_op = &vht_ie->vht_op_info;
 	VHT_MCS_MAP *vht_mcs = &vht_ie->basic_mcs_set;
+#endif
 	
 	DBGPRINT(RT_DEBUG_OFF, ("Dump VHT_OP IE\n"));	
 	hex_dump("VHT OP IE Raw Data", (UCHAR *)vht_ie, sizeof(VHT_OP_IE));
