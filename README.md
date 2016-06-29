@@ -47,6 +47,7 @@ Things that don't work to get a core dump or any sort of panic info & general in
 
 
 Other ralink implementations or references:
+- https://github.com/luckasfb
 - https://github.com/cnt0/rt5390
 - https://github.com/qualiabyte/install-rt2860
 - https://github.com/kuba-moo/mt7601u
